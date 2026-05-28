@@ -1,0 +1,171 @@
+data_config:
+  target: 
+    - "target_column" # Change this to your dataset's target column name
+  continuous_cols:
+    - "num_col_1"
+    - "num_col_2"
+    - "num_col_3"
+    - "num_col_4"
+    - "num_col_5"
+    - "num_col_6"
+    - "num_col_7"
+    - "num_col_8"
+  categorical_cols:
+    - "cat_col_1"
+    - "cat_col_2"
+  normalize_continuous_features: true
+
+trainer_config:
+  batch_size: 1024
+  max_epochs: 2
+  early_stopping: "valid_loss"
+  early_stopping_patience: 3
+  checkpoints: "valid_loss"
+
+optimizer_config:
+  optimizer: Adam
+  optimizer_params:
+    weight_decay: 0.00001
+  lr_scheduler: ReduceLROnPlateau
+  lr_scheduler_params:
+    patience: 2
+
+model_config:
+  # The model_type maps directly to a pytorch_tabular model.
+  # Available options: DANet, CategoryEmbedding, NODE, TabNet, MDN, AutoInt, TabTransformer, FTTransformer, GATE, GANDALF, TabM
+  model_type: TabM
+  task: classification # Can be classification or regression
+  learning_rate: 0.005
+  
+  # ====================================================================
+  # Below are the model-specific configurations. Uncomment the fields 
+  # for the model_type you selected and adjust their values as needed.
+  # ====================================================================
+
+  # --- TabM Specific Configs ---
+  k: 5
+  hidden_dim: 256
+  num_layers: 3
+  dropout: 0.1
+  use_batch_norm: False
+
+  # --- DANet Specific Configs ---
+  #n_layers: 4
+  #abstlay_dim_1: 32
+  #abstlay_dim_2: 64
+  # k: 5
+  # dropout_rate: 0.1
+  # block_activation: "ReLU"
+
+  # --- CategoryEmbedding Specific Configs ---
+  # layers: "128-64-32"
+  # activation: "ReLU"
+  # use_batch_norm: false
+  # initialization: "kaiming"
+  # dropout: 0.0
+
+  # --- NODE Specific Configs ---
+  #num_layers: 1
+  #num_trees: 2048
+  #additional_tree_output_dim: 3
+  #depth: 6
+  #choice_function: "entmax15"
+  #bin_function: "entmoid15"
+  #max_features: null
+  #input_dropout: 0.0
+  #initialize_response: "normal"
+  #initialize_selection_logits: "uniform"
+  #threshold_init_beta: 1.0
+  #threshold_init_cutoff: 1.0
+  #head: "LinearHead"
+
+  # --- TabNet Specific Configs ---
+  # n_d: 8
+  # n_a: 8
+  # n_steps: 3
+  # gamma: 1.3
+  # n_independent: 2
+  # n_shared: 2
+  # mask_type: "sparsemax"
+  # grouped_features: null
+
+  # --- MDN Specific Configs ---
+  # backbone_config_class: "CategoryEmbeddingModelConfig"
+  # backbone_config_params: {}
+  # head: "MixtureDensityHead"
+  # head_config: {}
+
+  # --- AutoInt Specific Configs ---
+  # attn_embed_dim: 32
+  # num_heads: 2
+  # num_attn_blocks: 3
+  # attn_dropouts: 0.0
+  # has_residuals: true
+  # embedding_dim: 16
+  # embedding_initialization: "kaiming_uniform"
+  # embedding_bias: false
+  # share_embedding: false
+  # share_embedding_strategy: "fraction"
+  # shared_embedding_fraction: 0.25
+  # deep_layers: true
+  # layers: "128-64-32"
+  # activation: "ReLU"
+  # use_batch_norm: false
+  # initialization: "kaiming"
+  # dropout: 0.0
+  # attention_pooling: false
+
+  # --- TabTransformer Specific Configs ---
+  # input_embed_dim: 32
+  # embedding_initialization: "kaiming_uniform"
+  # embedding_bias: false
+  # share_embedding: false
+  # share_embedding_strategy: "fraction"
+  # shared_embedding_fraction: 0.25
+  # num_heads: 8
+  # num_attn_blocks: 6
+  # transformer_head_dim: null
+  # attn_dropout: 0.1
+  # add_norm_dropout: 0.1
+  # ff_dropout: 0.1
+  # ff_hidden_multiplier: 4
+  # transformer_activation: "GEGLU"
+
+  # --- FTTransformer Specific Configs ---
+  # input_embed_dim: 32
+  # embedding_initialization: "kaiming_uniform"
+  # embedding_bias: false
+  # share_embedding: false
+  # share_embedding_strategy: "fraction"
+  # shared_embedding_fraction: 0.25
+  # attn_feature_importance: true
+  # num_heads: 8
+  # num_attn_blocks: 6
+  # transformer_head_dim: null
+  # attn_dropout: 0.1
+  # add_norm_dropout: 0.1
+  # ff_dropout: 0.1
+  # ff_hidden_multiplier: 4
+  # transformer_activation: "GEGLU"
+
+  # --- GATE Specific Configs ---
+  # gflu_stages: 2
+  # gflu_dropout: 0.0
+  # tree_depth: 6
+  # num_trees: 20
+  # binning_activation: "entmoid15"
+  # feature_mask_function: "softmax"
+  # gflu_feature_init_sparsity: 0.3
+  # tree_feature_init_sparsity: 0.8
+  # learnable_sparsity: true
+  # tree_dropout: 0.0
+  # chain_trees: false
+  # tree_wise_attention: false
+  # tree_wise_attention_dropout: 0.0
+  # share_head_weights: true
+
+  # --- GANDALF Specific Configs ---
+  # gflu_stages: 2
+  # gflu_dropout: 0.0
+  # gflu_feature_init_sparsity: 0.3
+  # learnable_sparsity: true
